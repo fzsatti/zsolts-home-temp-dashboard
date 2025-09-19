@@ -10,12 +10,12 @@ import {useSupabase} from "@/stores/SupabaseStore";
 
 export default function Home() {
     const supabase = useSupabase((s) => s.service);
-    const [exteriorTemp, setExteriorTemp] = React.useState<LatestTemp>({created_at: "", temp: 0});
-    const [boilerTemp, setBoilerTemp] = React.useState<LatestTemp>({created_at: "", temp: 0});
+    const [exteriorTemp, setExteriorTemp] = React.useState<LatestTemp | null>({created_at: "", temp: 0});
+    const [boilerTemp, setBoilerTemp] = React.useState<LatestTemp | null>({created_at: "", temp: 0});
 
     useEffect(() => {
-        supabase.getLatestBoilerTemp().then((data: LatestTemp) => setBoilerTemp(data));
-        supabase.getLatestOutsideTemp().then((data: LatestTemp) => setExteriorTemp(data));
+        supabase.getLatestBoilerTemp().then((data: LatestTemp | null) => setBoilerTemp(data));
+        supabase.getLatestOutsideTemp().then((data: LatestTemp | null) => setExteriorTemp(data));
     }, [supabase]);
 
     return (
