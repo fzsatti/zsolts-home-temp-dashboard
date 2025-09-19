@@ -27,7 +27,7 @@ export default function History() {
             </div>
 
             <CollapsibleContent className="mt-4 space-y-">
-                <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
+                <Tabs value={tab} onValueChange={(v) => setTab(v as "boiler" | "exterior")} className="w-full">
                     <TabsList className="rounded-xl w-1/4">
                         <TabsTrigger value="boiler" className="rounded-lg">Boiler</TabsTrigger>
                         <TabsTrigger value="exterior" className="rounded-lg">Exterior</TabsTrigger>
