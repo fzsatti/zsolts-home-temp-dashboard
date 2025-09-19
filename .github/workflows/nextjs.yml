@@ -27,7 +27,7 @@ concurrency:
 jobs:
   # Build job
   build:
-    environment: production
+    environment: default
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
