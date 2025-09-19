@@ -1,6 +1,6 @@
 'use client'
 
-import {Tabs, TabsList, TabsTrigger, TabsContent,} from "@/components/ui/tabs";
+import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Collapsible, CollapsibleTrigger, CollapsibleContent,} from "@/components/ui/collapsible";
 import {Button} from "@/components/ui/button";
 import React from "react";

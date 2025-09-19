@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 import TempCard from "@/components/temp-card";
 import History from "@/components/history/history";
-import {LatestTemp, SupabaseTempService} from "@/services/SupabaseService";
+import {LatestTemp} from "@/services/SupabaseService";
 import {useSupabase} from "@/stores/SupabaseStore";
 
 export default function Home() {

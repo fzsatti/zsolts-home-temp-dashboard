@@ -1,24 +1,6 @@
 'use client'
 
-import {SupabaseClient} from "@supabase/supabase-js";
 import {ChartData, ChartPoint} from "@/services/SupabaseService";
-
-export function generateSeries({points, base, swing, noise = 0.5}: {
-    points: number;
-    base: number;
-    swing: number;
-    noise?: number
-}) {
-    const now = Date.now();
-    const step = Math.floor((12 * 60 * 60 * 1000) / points); // default ~12h range; will scale
-    return Array.from({length: points}, (_, i) => {
-        const t = now - (points - 1 - i) * step;
-        // smooth variation + noise
-        const rad = (i / points) * Math.PI * 2;
-        const val = base + Math.sin(rad * 2) * swing + (Math.random() - 0.5) * noise;
-        return {ts: t, value: Number(val.toFixed(1))};
-    });
-}
 
 export function formatTick(ts: string, mode: "h" | "d") {
     const d = new Date(ts);
