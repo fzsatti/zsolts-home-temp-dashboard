@@ -26,6 +26,7 @@ export default function BoilerTab() {
     const [boilerSeries, setBoilerSeries] = React.useState<{time:string, value:number}[]>([]);
 
     const fetchChartData = function (boilerTf: keyof typeof TIMEFRAMES.boiler) {
+        setBoilerTf(boilerTf);
         const cfg = TIMEFRAMES.boiler[boilerTf];
         supabase.getBoilerChartData(boilerTf, {maxPoints: cfg.points}).then((raw: ChartPoint[]) => {
             const result = raw.map((d: ChartPoint) => ({

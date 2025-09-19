@@ -1,7 +1,7 @@
 'use client'
 
 import {createClient} from '@supabase/supabase-js'
-import {downsample, rowToPoint, timeframeToRange} from "@/services/helpers";
+import {downsample, formatToLocalDate, rowToPoint, timeframeToRange} from "@/services/helpers";
 
 export type LatestTemp = {
     temp: number
@@ -61,8 +61,8 @@ export class SupabaseTempService {
         const { data, error } = await this.supabase
             .from('boiler_temp')
             .select('created_at, temp')
-            .gte('created_at', from)
-            .lte('created_at', to)
+            .gte('created_at', formatToLocalDate(from))
+            .lte('created_at', formatToLocalDate(to))
             .order('created_at', { ascending: true })
 
         if (error) throw new Error(`getBoilerChartData: ${error.message}`)
@@ -77,8 +77,8 @@ export class SupabaseTempService {
         const { data, error } = await this.supabase
             .from('outside_temp')
             .select('created_at, temp')
-            .gte('created_at', from)
-            .lte('created_at', to)
+            .gte('created_at', formatToLocalDate(from))
+            .lte('created_at', formatToLocalDate(to))
             .order('created_at', { ascending: true })
 
         if (error) throw new Error(`getOutsideChartData: ${error.message}`)

@@ -2,8 +2,21 @@
 
 import {ChartData, ChartPoint} from "@/services/SupabaseService";
 
+export function formatToLocalDate(date: Date) {
+    return new Intl.DateTimeFormat("ISO", {
+        timeZone: "Europe/Bucharest", // set your timezone
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    }).format(date);
+}
+
 export function formatTick(ts: string, mode: "h" | "d") {
-    const d = new Date(ts);
+    const input = ts.replace(/\.(\d{3})\d+$/, '.$1');
+    const d = new Date(input);
     return mode === "h"
         ? d.toLocaleTimeString(undefined, {hour: "2-digit", minute: "2-digit"})
         : d.toLocaleDateString(undefined, {day: "numeric", hour: "2-digit"});
@@ -29,7 +42,7 @@ export function subNow(duration: { hours?: number; days?: number, months?: numbe
     return d
 }
 
-export function timeframeToRange(tf: string): { from: string; to: string } {
+export function timeframeToRange(tf: string): { from: Date; to: Date } {
     const to = new Date()
     let from: Date = new Date();
 
@@ -55,8 +68,11 @@ export function timeframeToRange(tf: string): { from: string; to: string } {
         case "1m":
             from = subNow({months: 1});
             break;
+        default:
+            console.log("Unknown timeframe", tf);
+            break;
     }
-    return { from: from.toISOString(), to: to.toISOString() }
+    return {from: from, to: to}
 }
 
 export function downsample(points: ChartData, maxPoints = 500): ChartData {

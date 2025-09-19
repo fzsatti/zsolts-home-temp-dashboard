@@ -25,8 +25,9 @@ export default function ExteriorTab() {
     const [exteriorSeries, setExteriorSeries] = React.useState<{time:string, value:number}[]>([]);
 
     const fetchChartData = function (extTf: keyof typeof TIMEFRAMES.exterior) {
+        setExtTf(extTf);
         const cfg = TIMEFRAMES.exterior[extTf];
-        supabase.getBoilerChartData(extTf, {maxPoints: cfg.points}).then((raw: ChartPoint[]) => {
+        supabase.getOutsideChartData(extTf, {maxPoints: cfg.points}).then((raw: ChartPoint[]) => {
             const result = raw.map((d: ChartPoint) => ({
                 time: cfg.mode === "h" ? formatTick(d.ts, "h") : formatTick(d.ts, "d"),
                 value: d.value,
