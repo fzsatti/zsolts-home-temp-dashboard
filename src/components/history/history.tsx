@@ -1,0 +1,41 @@
+'use client'
+
+import {Tabs, TabsList, TabsTrigger, TabsContent,} from "@/components/ui/tabs";
+import {Collapsible, CollapsibleTrigger, CollapsibleContent,} from "@/components/ui/collapsible";
+import {Button} from "@/components/ui/button";
+import React from "react";
+import {ChevronDown} from "lucide-react";
+import BoilerTab from "@/components/history/boiler-tab";
+import ExteriorTab from "@/components/history/exterior-tab";
+
+export default function History() {
+
+    const [historyOpen, setHistoryOpen] = React.useState(false);
+    const [tab, setTab] = React.useState<"boiler" | "exterior">("boiler");
+
+    return (
+        <Collapsible open={historyOpen} onOpenChange={setHistoryOpen}>
+            <div className="flex items-center justify-between">
+                <CollapsibleTrigger asChild>
+                    <Button variant="outline" className="w-1/4 rounded-xl flex justify-between">
+                        <ChevronDown
+                            className={`mr-2 h-4 w-4 transition-transform ${historyOpen ? "rotate-180" : ""}`}/>
+                        History
+                    </Button>
+                </CollapsibleTrigger>
+                <div className="text-sm text-muted-foreground">Choose a sensor & timeframe</div>
+            </div>
+
+            <CollapsibleContent className="mt-4 space-y-">
+                <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
+                    <TabsList className="rounded-xl w-1/4">
+                        <TabsTrigger value="boiler" className="rounded-lg">Boiler</TabsTrigger>
+                        <TabsTrigger value="exterior" className="rounded-lg">Exterior</TabsTrigger>
+                    </TabsList>
+                    <BoilerTab />
+                    <ExteriorTab />
+                </Tabs>
+            </CollapsibleContent>
+        </Collapsible>
+    )
+}
