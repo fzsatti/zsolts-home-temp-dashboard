@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "github-pages";
+// const isProd = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "github-pages";
+const isProd = true;
 const repo = "zsolts-home-temp-dashboard";
 
 const nextConfig: NextConfig = {
