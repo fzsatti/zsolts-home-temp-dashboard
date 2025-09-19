@@ -9,7 +9,7 @@ export function formatTick(ts: string, mode: "h" | "d") {
         : d.toLocaleDateString(undefined, {day: "numeric", hour: "2-digit"});
 }
 
-export function formatCreatedAt(cratedAt) {
+export function formatCreatedAt(cratedAt: string | undefined) {
     if (!cratedAt) {
         return '-';
     }
@@ -31,7 +31,7 @@ export function subNow(duration: { hours?: number; days?: number, months?: numbe
 
 export function timeframeToRange(tf: string): { from: string; to: string } {
     const to = new Date()
-    let from: Date
+    let from: Date = new Date();
 
     switch (tf) {
         case "1h":

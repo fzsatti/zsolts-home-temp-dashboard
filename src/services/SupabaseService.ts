@@ -18,8 +18,8 @@ export type ChartData = ChartPoint[]
 export class SupabaseTempService {
     private constructor() {
         this.supabase = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL,
-            process.env.NEXT_PUBLIC_SUPABASE_KEY,
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_KEY!,
         )
     }
     static create(): SupabaseTempService {

@@ -5,7 +5,7 @@ import {Card, CardContent} from "@/components/ui/card";
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {TabsContent} from "@/components/ui/tabs";
 import React, {useEffect} from "react";
-import {formatTick, generateSeries} from "@/services/helpers";
+import {formatTick} from "@/services/helpers";
 import {ChartPoint} from "@/services/SupabaseService";
 import {useSupabase} from "@/stores/SupabaseStore";
 
@@ -22,16 +22,15 @@ export default function ExteriorTab() {
 
     const supabase = useSupabase((s) => s.service);
     const [extTf, setExtTf] = React.useState<keyof typeof TIMEFRAMES.exterior>("1d");
-    const [exteriorSeries, setExteriorSeries] = React.useState([]);
+    const [exteriorSeries, setExteriorSeries] = React.useState<{time:string, value:number}[]>([]);
 
-    const fetchChartData = function (extTf) {
+    const fetchChartData = function (extTf: keyof typeof TIMEFRAMES.exterior) {
         const cfg = TIMEFRAMES.exterior[extTf];
         supabase.getBoilerChartData(extTf, {maxPoints: cfg.points}).then((raw: ChartPoint[]) => {
             const result = raw.map((d: ChartPoint) => ({
                 time: cfg.mode === "h" ? formatTick(d.ts, "h") : formatTick(d.ts, "d"),
                 value: d.value,
             }));
-            console.log(result);
             setExteriorSeries(result);
         })
     }

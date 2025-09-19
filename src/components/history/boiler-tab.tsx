@@ -5,7 +5,7 @@ import {Card, CardContent} from "@/components/ui/card";
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {TabsContent} from "@/components/ui/tabs";
 import React, {useEffect} from "react";
-import {formatTick, generateSeries} from "@/services/helpers";
+import {formatTick} from "@/services/helpers";
 import {useSupabase} from "@/stores/SupabaseStore";
 import {ChartPoint} from "@/services/SupabaseService";
 
@@ -23,16 +23,15 @@ export default function BoilerTab() {
     const supabase = useSupabase((s) => s.service);
 
     const [boilerTf, setBoilerTf] = React.useState<keyof typeof TIMEFRAMES.boiler>("6h");
-    const [boilerSeries, setBoilerSeries] = React.useState([]);
+    const [boilerSeries, setBoilerSeries] = React.useState<{time:string, value:number}[]>([]);
 
-    const fetchChartData = function (boilerTf) {
+    const fetchChartData = function (boilerTf: keyof typeof TIMEFRAMES.boiler) {
         const cfg = TIMEFRAMES.boiler[boilerTf];
         supabase.getBoilerChartData(boilerTf, {maxPoints: cfg.points}).then((raw: ChartPoint[]) => {
             const result = raw.map((d: ChartPoint) => ({
                 time: cfg.mode === "h" ? formatTick(d.ts, "h") : formatTick(d.ts, "d"),
                 value: d.value,
             }));
-            console.log(result);
             setBoilerSeries(result);
         })
     }
