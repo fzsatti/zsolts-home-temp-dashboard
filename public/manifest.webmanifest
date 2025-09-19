@@ -8,6 +8,6 @@
   "theme_color": "#111827",
   "description": "To show temperatures at home",
   "icons": [
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/zsolts-home-temp-dashboard/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

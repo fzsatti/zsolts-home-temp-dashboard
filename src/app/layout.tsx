@@ -15,10 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: "Zsolts-Home Temps",
     description: "Show temperatures at home",
-    manifest: "/manifest.webmanifest",
+    manifest: "/zsolts-home-temp-dashboard/manifest.webmanifest",
     icons: {
         icon: [
-            { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" }
+            { url: "/zsolts-home-temp-dashboard/icons/icon-512.png", sizes: "512x512", type: "image/png" }
         ],
     }
 };
