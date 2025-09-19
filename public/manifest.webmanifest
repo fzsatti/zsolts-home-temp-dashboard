@@ -1,7 +1,7 @@
 {
   "name": "Zsolt-Home Temp Dashboard",
   "short_name": "Temp Dashboard",
-  "start_url": "/",
+  "start_url": "/zsolts-home-temp-dashboard",
   "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
