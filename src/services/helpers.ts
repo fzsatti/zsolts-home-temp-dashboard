@@ -3,15 +3,17 @@
 import {ChartData, ChartPoint} from "@/services/SupabaseService";
 
 export function formatToLocalDate(date: Date) {
-    return new Intl.DateTimeFormat("ISO", {
-        timeZone: "Europe/Bucharest", // set your timezone
+    return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Europe/Bucharest",
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
+        hour12: false,
     }).format(date);
+
 }
 
 export function formatTick(ts: string, mode: "h" | "d") {

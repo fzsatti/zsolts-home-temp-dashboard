@@ -23,7 +23,7 @@ export default function BoilerTab() {
     const supabase = useSupabase((s) => s.service);
 
     const [boilerTf, setBoilerTf] = React.useState<keyof typeof TIMEFRAMES.boiler>("6h");
-    const [boilerSeries, setBoilerSeries] = React.useState<{time:string, value:number}[]>([]);
+    const [boilerSeries, setBoilerSeries] = React.useState<{ time: string, value: number }[]>([]);
 
     const fetchChartData = function (boilerTf: keyof typeof TIMEFRAMES.boiler) {
         setBoilerTf(boilerTf);
@@ -43,7 +43,7 @@ export default function BoilerTab() {
 
     return (
         <TabsContent value="boiler" className="mt-4 space-y-3">
-            <div className="flex items-center gap-3">
+            <div className="w-full lg:w-1/4 flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Timeframe</span>
                 <Select value={boilerTf}
                         onValueChange={(v) => fetchChartData(v as keyof typeof TIMEFRAMES.boiler)}>
@@ -60,21 +60,19 @@ export default function BoilerTab() {
                 </Select>
             </div>
 
-            <Card className="rounded-2xl">
-                <CardContent className="pt-6">
-                    <div className="h-72">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={boilerSeries} margin={{left: 8, right: 8, top: 8, bottom: 8}}>
-                                <CartesianGrid strokeDasharray="3 3"/>
-                                <XAxis dataKey="time" tick={{fontSize: 12}} interval="preserveStartEnd"/>
-                                <YAxis domain={[40, 80]} tick={{fontSize: 12}} unit="°C"/>
-                                <Tooltip formatter={(val) => `${val}°C`} labelClassName="text-xs"/>
-                                <Line type="monotone" dataKey="value" strokeWidth={2} dot={false}/>
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </CardContent>
-            </Card>
+
+            <div className="h-72">
+                <ResponsiveContainer width="100%" height="100%" aspect={2}>
+                    <LineChart data={boilerSeries} margin={{left: 0, right: 0, top: 4, bottom: 4}}>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <XAxis dataKey="time" tick={{fontSize: 12}} interval="preserveStartEnd" angle={-45} textAnchor="end" height={60}/>
+                        <YAxis tick={{fontSize: 12}} unit="°C"/>
+                        <Tooltip formatter={(val) => `${val}°C`} labelClassName="text-xs"/>
+                        <Line type="monotone" dataKey="value" strokeWidth={2} dot={false}/>
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
+
         </TabsContent>
     );
 }

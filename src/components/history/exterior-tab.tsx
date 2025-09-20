@@ -22,7 +22,7 @@ export default function ExteriorTab() {
 
     const supabase = useSupabase((s) => s.service);
     const [extTf, setExtTf] = React.useState<keyof typeof TIMEFRAMES.exterior>("1d");
-    const [exteriorSeries, setExteriorSeries] = React.useState<{time:string, value:number}[]>([]);
+    const [exteriorSeries, setExteriorSeries] = React.useState<{ time: string, value: number }[]>([]);
 
     const fetchChartData = function (extTf: keyof typeof TIMEFRAMES.exterior) {
         setExtTf(extTf);
@@ -42,7 +42,7 @@ export default function ExteriorTab() {
 
     return (
         <TabsContent value="exterior" className="mt-4 space-y-3">
-            <div className="flex items-center gap-3">
+            <div className="w-full lg:w-1/4 flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Timeframe</span>
                 <Select value={extTf}
                         onValueChange={(v) => fetchChartData(v as keyof typeof TIMEFRAMES.exterior)}>
@@ -59,22 +59,20 @@ export default function ExteriorTab() {
                 </Select>
             </div>
 
-            <Card className="rounded-2xl">
-                <CardContent className="pt-6">
-                    <div className="h-72">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={exteriorSeries}
-                                       margin={{left: 8, right: 8, top: 8, bottom: 8}}>
-                                <CartesianGrid strokeDasharray="3 3"/>
-                                <XAxis dataKey="time" tick={{fontSize: 12}} interval="preserveStartEnd"/>
-                                <YAxis domain={[-15, 40]} tick={{fontSize: 12}} unit="°C"/>
-                                <Tooltip formatter={(val) => `${val}°C`} labelClassName="text-xs"/>
-                                <Line type="monotone" dataKey="value" strokeWidth={2} dot={false}/>
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </CardContent>
-            </Card>
+
+            <div className="h-72">
+                <ResponsiveContainer width="100%" height="100%" aspect={2}>
+                    <LineChart data={exteriorSeries}
+                               margin={{left: 0, right: 0, top: 4, bottom: 4}}>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <XAxis dataKey="time" tick={{fontSize: 12}} interval="preserveStartEnd" angle={-45} textAnchor="end" height={60}/>
+                        <YAxis tick={{fontSize: 12}} unit="°C"/>
+                        <Tooltip formatter={(val) => `${val}°C`} labelClassName="text-xs"/>
+                        <Line type="monotone" dataKey="value" strokeWidth={2} dot={false}/>
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
+
         </TabsContent>
     );
 }
