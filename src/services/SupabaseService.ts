@@ -15,17 +15,33 @@ export type ChartPoint = {
 
 export type ChartData = ChartPoint[]
 
+export const SUPABASE_STORAGE_KEY = 'sb-tempdash-auth'
+
 export class SupabaseTempService {
     private constructor() {
         this.supabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
             process.env.NEXT_PUBLIC_SUPABASE_KEY!,
+            {
+                auth: {
+                    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+                    storageKey: SUPABASE_STORAGE_KEY,
+                    autoRefreshToken: true,
+                    persistSession: true,
+                    detectSessionInUrl: true,
+                },
+            }
         )
     }
     static create(): SupabaseTempService {
         return new SupabaseTempService();
     }
-    private supabase;
+    public supabase;
+
+    async getCurrentUser() {
+        const { data } = await this.supabase.auth.getUser()
+        return data.user ?? null
+    }
 
     async getLatestBoilerTemp(): Promise<LatestTemp | null> {
         const { data, error } = await this.supabase
